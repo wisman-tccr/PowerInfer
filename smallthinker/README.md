@@ -5,14 +5,18 @@
 
 ## Demo
 
+
+https://github.com/user-attachments/assets/3ee5102f-0648-4e91-bb44-fe9fa5c12328
+
+
 ## Speed
 ### SmallThinker 21B 
 | Model                               | Memory(GiB)         | i9 14900 | 1+13 8ge4 | rk3588 (16G) | Raspberry PI 5 |
 |--------------------------------------|---------------------|----------|-----------|--------------|----------------|
 | SmallThinker 21B+sparse              | 11.47               | 30.19    | 23.03     | 10.84        | 6.61           |
-| SmallThinker 21B+sparse +limited memory | 84                | limit 8G | 20.30     | 15.50        | 8.56           |
+| SmallThinker 21B+sparse +limited memory | limit 8G         | 20.30     | 15.50        | 8.56     | -              |
 | Qwen3 30B A3B                        | 16.20               | 33.52    | 20.18     | 9.07         | -              |
-| Qwen3 30B A3Blimited memory          | 81.38               | limit 8G | 10.11     | 0.18         | 6.32           |
+| Qwen3 30B A3Blimited memory          | limit 8G            | 10.11     | 0.18         | 6.32     | -              |
 | Gemma 3n E2B                         | 1G, theoretically   | 36.88    | 27.06     | 12.50        | 6.66           |
 | Gemma 3n E4B                         | 2G, theoretically   | 21.93    | 16.58     | 7.37         | 4.01           |
 
@@ -31,11 +35,19 @@
 Note：i9 14900、1+13 8ge4 use 4 threads，others use the number of threads that  can achieve the maximum speed 
 
 ## Setup
-
+1. cd smallthinker and begin your compilation
+```bash
+cd smallthinker
+```
 1. install clang-21 and mold：
 
 ```bash
 sudo apt install clang-21 mold
+```
+3. init submodule：
+
+```bash
+git submodule update --init --recursive
 ```
 
 ## Convert Model
@@ -142,6 +154,7 @@ EXPERT_BUNDLE_PATH=/path/to/bundle ./llama-cli -m /path/to/no_moe_gguf_q4_0 --no
 ```
 ### LM Head Sparsity: 
 1. The 4B model uses a sparse lm_head which may lead to some loss in precision. If you want to disable it, change the condition at src/llama-model.cpp:7580 to false.But the speed is slower.
+2. It may require root privileges when running in Termux.
 
 
 ## Acknowledgements
